@@ -1,0 +1,78 @@
+import java.util.Scanner;
+class UnderAgeException extends Exception
+{
+	public String getMessage()
+	{
+		return "You Are Too Young,Have Patience";
+	}
+}
+class OverAgeException extends Exception
+{
+	public String getResult()
+	{
+		return "You Are Too Old,Calm Down";
+	}
+}
+class Applicant
+{
+	int age;
+	public void acceptInput()
+	{
+		Scanner scan=new Scanner(System.in);
+		System.out.println("Enter The Age Of The Person:");
+		age=scan.nextInt();
+	}
+	public void verify() throws Exception
+	{
+		if(age<18)
+		{
+			UnderAgeException ue=new UnderAgeException();
+			System.out.println(ue.getMessage());
+			throw ue;
+		}
+		else if(age>65)
+		{
+			OverAgeException oe=new OverAgeException();
+			System.out.println(oe.getResult());
+			throw oe;
+		}
+		else
+		{
+			System.out.println(" congratulations Collect Your Driving Licence");
+		}
+	}
+}
+class RTO
+{
+	public void initiate()
+	{
+		Applicant app=new Applicant();
+		try
+		{
+			app.acceptInput();
+			app.verify();
+		}
+			catch(Exception e)
+			{
+				try
+				{
+					app.acceptInput();
+					app.verify();
+				}
+				catch(Exception f)
+				{
+					System.out.println("Try Again After 3 Months");
+					System.exit(0);
+				}
+			}
+		}
+	}
+class Cover 
+{
+	public static void main(String[] args)
+	{
+		RTO r=new RTO();
+		r.initiate();
+	}
+	
+}
